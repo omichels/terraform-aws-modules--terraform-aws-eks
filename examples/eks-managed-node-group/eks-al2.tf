@@ -4,6 +4,8 @@ module "eks_al2" {
 
   cluster_name    = "${local.name}-al2"
   cluster_version = "1.31"
+  cluster_endpoint_public_access = true
+  enable_cluster_creator_admin_permissions = true
 
   # EKS Addons
   cluster_addons = {
@@ -11,6 +13,9 @@ module "eks_al2" {
     eks-pod-identity-agent = {}
     kube-proxy             = {}
     vpc-cni                = {}
+    aws-ebs-csi-driver = {
+      resolve_conflicts = "OVERWRITE"
+    }
   }
 
   vpc_id     = module.vpc.vpc_id
